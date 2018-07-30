@@ -56,9 +56,11 @@ int main() {
 				msgPack >> command;
 				if (command == "/message") {
 					msgPack >> message;
+					msgPack.clear();
 					msgPack << command << (*socket[i]).getRemoteAddress().toInteger() << message;
 					for (int q = 0; q < socQ; q++) {
-						(*socket[q]).send(msgPack);
+						if(q!=i)
+						while((*socket[q]).send(msgPack)==sf::Socket::Status::Partial);
 					}
 					msgPack.clear();
 					command.clear();
