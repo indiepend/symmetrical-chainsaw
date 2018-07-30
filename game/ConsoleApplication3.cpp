@@ -198,6 +198,7 @@ int main()
 				map.loadUp("mapa2.txt", &window);
 				playerAnim.loadAnimations("anim.txt");
 				hud.setUp(&window, map.Collisionable(), map.CollisionNum(), playerAnim.getCurrentFrame());
+				hud.setEvents(&zdarzenia,&sieci);
 				bohater.setUp(map.PlayerCoords(), playerAnim.getCurrentFrame(), map.Collisionable(), map.CollisionNum(), meni.getSetts());
 				kamera.getValues(playerAnim.getCurrentFrame(), &window);
 				//(*filtr).setNoctovision(sf::Vector2i(kamera.getSize()));
@@ -207,7 +208,7 @@ int main()
 			}
 			///////////////////////////////////////////////////////////////////////////////
 			//(*filtr).activeNoctovision(bohater.noctovision());
-			hud.update(50);
+			hud.netUpdate(50);
 			bohater.Check();
 			playerAnim.listener(bohater.GetAnimation());
 			kamera.cameraUpdate();
@@ -221,7 +222,7 @@ int main()
 			(*wrogowie).draw(&window);
 			playerAnim.drawAnimation(&window);
 			//(*filtr).drawNoctovision(kamera.getPosition());
-			hud.draw();
+			hud.netDraw();
 			window.display();
 		}
 	}

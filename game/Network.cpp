@@ -50,6 +50,16 @@ void Network::disconnect()
 	TCPcon.disconnect();
 }
 
+void Network::sendMessage(std::string msg)
+{
+	TCPcon.sendMessage(msg);
+}
+
+bool Network::receiveMessage(sf::Packet* pack)
+{
+	return TCPcon.receiveMessage(pack);
+}
+
 sf::Vector2f Network::getCoords()
 {
 	return rUDP.getCoords();

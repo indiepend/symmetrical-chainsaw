@@ -19,13 +19,14 @@ public:
 	};
 	void setUp();
 	void refresh(std::string animation, sf::Vector2f coords);
-	void connect(Enemy *enemy);
+	void connect(Enemy *);
 	void disconnect();
+	void sendMessage(std::string);
+	bool receiveMessage(sf::Packet*);
 	sf::Vector2f getCoords();
 	std::string getAnimation();
 	sf::IpAddress getAdress();
 	Network();
 	Network(Network::setIt set);
-	//~Network();
 };
 

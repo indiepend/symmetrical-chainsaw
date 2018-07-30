@@ -29,17 +29,19 @@ class TCPconnector
 	sf::TcpSocket serverSocket;
 	sf::Socket::Status stat;
 	sf::Packet connectPack;
-	sf::Packet pack;
+	sf::Packet pack, message;
 	sf::Packet newPack,lostPack;
 	sf::Uint32 clients, adress;
 	std::string action;
 	senderUDP *ARG_udp;
-	bool lostC=false, newC=false;
+	bool lostC = false, newC = false, newMsg = false;
 public:
 	void setUp(senderUDP *udp);
 	void connect(sf::IpAddress serverAdress);
 	bool lostConnect();
 	bool newConnect();
+	bool receiveMessage(sf::Packet*);
+	void sendMessage(std::string);
 	sf::Packet getNewCon();
 	sf::Packet getLostCon();
 	void receive();
