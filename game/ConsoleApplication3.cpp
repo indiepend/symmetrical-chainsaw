@@ -186,9 +186,7 @@ int main()
 			(*filtr).drawNoctovision(kamera.getPosition());
 			hud.draw();
 			wzrok.draw();
-			//if (game_menu.pauseCheck(zdarzenia.isEscapePressed()) == false) {
-				game_menu.inGameDraw();
-			//}
+			game_menu.inGameDraw();
 			window.display();
 		}
 		if (meni.getOP() == 2) {

@@ -115,7 +115,7 @@ void Protagonist::Check() {
 	Movin::restart();
 }
 
-void Protagonist::setUp(sf::Vector2f coords,sf::Sprite * Picture, sf::Sprite MayCollisionPictures[], int HowManyCSprites, sf::Keyboard::Key * setts) {
+void Protagonist::setUp(sf::Vector2f coords,sf::Sprite * Picture, sf::Sprite* MayCollisionPictures, int HowManyCSprites, sf::Keyboard::Key * setts) {
 	Collision::setUp(Picture, MayCollisionPictures, HowManyCSprites);
 	ziomus = Picture;
 	(*ziomus).setPosition(coords);

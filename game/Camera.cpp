@@ -3,43 +3,35 @@
 void Camera::cameraUpdate(){
 	lel = (*prot).getPosition();
 	if (los != lel) {
-		x=lel.x - los.x;
-		y=lel.y - los.y;
-		view.move(x*0.15, y*0.15);
+		view.move((lel.x - los.x)*0.15, (lel.y - los.y)*0.15);
 	}
 	los = view.getCenter();
-	(*okno).setView(view);
+	(*ARG_window).setView(view);
 }
-Camera::Camera() {
 
-}
 void Camera::getValues(sf::Sprite * Protagonist, sf::RenderWindow * window) {
-	protp = (*Protagonist).getGlobalBounds();
-	view.setCenter((*Protagonist).getLocalBounds().left + (*Protagonist).getLocalBounds().width / 2, (*Protagonist).getLocalBounds().top - 100);
-	sf::Vector2f lol((*window).getSize().x, (*window).getSize().y);
-	view.setSize(lol);
-	(*window).setView(view);
+	ARG_window = window;
 	prot = Protagonist;
-	okno = window;
+
+	view.setCenter((*Protagonist).getLocalBounds().left + (*Protagonist).getLocalBounds().width / 2, (*Protagonist).getLocalBounds().top - 100);
+	view.setSize((*window).getSize().x, (*window).getSize().y);
+	(*window).setView(view);
 }
 
 void Camera::getValuesWindow(sf::RenderWindow * window) {
+	ARG_window = window;
 	view.setCenter((*window).getSize().x / 2, (*window).getSize().y/2);
-	sf::Vector2f lol((*window).getSize().x, (*window).getSize().y);
-	view.setSize(lol);
+	view.setSize((*window).getSize().x, (*window).getSize().y);
 	(*window).setView(view);
-	okno = window;
 }
 
 void Camera::cameraUpdateMain() {
-	lel = sf::Vector2f(sf::Mouse::getPosition((*okno)));
+	lel = sf::Vector2f(sf::Mouse::getPosition((*ARG_window)));
 	if (los != lel) {
-		x = lel.x - los.x;
-		y = lel.y - los.y;
-		view.move(x*0.1, y*0.1);
+		view.move((lel.x - los.x)*0.1, (lel.y - los.y)*0.1);
 	}
-	los = sf::Vector2f((*okno).getSize().x/2, (*okno).getSize().y / 2);
-	(*okno).setView(view);
+	los = sf::Vector2f((*ARG_window).getSize().x/2, (*ARG_window).getSize().y / 2);
+	(*ARG_window).setView(view);
 }
 
 sf::Vector2f Camera::getSize() {

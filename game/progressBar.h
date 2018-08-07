@@ -1,14 +1,12 @@
 #include "stdafx.h"
 #pragma once
 
-using namespace std;
-
 class progressBar
 {
 public:
 	enum class Type {
-		backgroundSprite = 0,
-		barSprite
+		background = 0,
+		bar
 	};
 	enum class Direction {
 		horizontal = 0,
@@ -19,28 +17,71 @@ private:
 		toLoad = 0,
 		Loaded
 	};
-	sf::RenderTexture wholeRend,barRend,bgRend,borderRend;
-	sf::Sprite border, bar, bg, whole;
-	int ARG_width, ARG_height,ARG_coordX,ARG_coordY;
-	float step, ARG_measurable;
-	sf::Color ARG_barColor=sf::Color(255,255,255), ARG_bgColor = sf::Color(0, 0, 0), ARG_borderColor = sf::Color(0,0,0);
-	progressBar::Direction ARG_dir;
+	sf::RectangleShape bg,bar;
+	float step;
+	Direction ARG_dir;
 public:
-	//\Brief:
-	//\direction "horizontal" or "vertical" - default vertical
-	//\width and height in pixels
-	//\measurable is float which bar shows as max
+	//////////////////////////////////////////////////
+	///\brief
+	///creates new progress bar
+	///set dimensions then set maximum value for bar
+	///then set its direction "horizontal" or "vertical"
+	///default value is "vertical"
+	//////////////////////////////////////////////////
 	void create(int,int,float, Direction = Direction::vertical);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///sets border around background
+	///set its thickness and color
+	//////////////////////////////////////////////////
 	void setBorder(int, sf::Color);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///set colors of background and progressbar
+	//////////////////////////////////////////////////
 	void setColors(sf::Color, sf::Color);
-	void customSprite(sf::Sprite, Type);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///set custom texture instead just color of background or progress bar
+	///by default it's progress bar
+	//////////////////////////////////////////////////
+	void customTexture(sf::Texture*, Type=Type::bar);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///places bar in app
+	///coordinates are in pixels
+	//////////////////////////////////////////////////
 	void placeBar(int, int);
-	//\Brief:
-	//\measured is actual value which bar shows
-	//\if measured is bigger than max nothing happens
+
+	//////////////////////////////////////////////////
+	///\brief
+	///updates bar with passed value
+	///note: if value is bigger than maximum nothing really happens
+	//////////////////////////////////////////////////
 	void update(float);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///draws progress bar to passed target
+	//////////////////////////////////////////////////
 	void draw(sf::RenderTarget*);
 
+	//////////////////////////////////////////////////
+	///\brief
+	///default constructor
+	//////////////////////////////////////////////////
 	progressBar();
-	progressBar(int, int, float, Direction);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///constructor overload
+	///set dimensions then set maximum value for bar
+	///then set its direction "horizontal" or "vertical"
+	///default value is "vertical"
+	//////////////////////////////////////////////////
+	progressBar(int, int, float, Direction = Direction::vertical);
 };
