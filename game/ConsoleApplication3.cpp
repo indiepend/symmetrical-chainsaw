@@ -21,7 +21,7 @@
 
 #include "GameRun.h"
 /*******************************************************************************
-Ver. 0.1.26 debug nr. 1 / SFML ver 2.5.0 / 32-bit debug
+Ver. 0.1.27 debug nr. 1 / SFML ver 2.5.0 / 32-bit debug
 
 zmiany od 0.1.2:
 -wybieranie sterowania
@@ -36,6 +36,7 @@ zmiany od 0.1.2:
 *pasek zycia
 -ulepszone menu
 *dzwieki menu
+-chat
 
 zmiany od 0.1.1:
 -wprowadzony miernik czasu w gore i w dol(nie wiem jakim cudem dziala; do przepisania)

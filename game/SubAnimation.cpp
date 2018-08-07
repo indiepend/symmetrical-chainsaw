@@ -1,58 +1,49 @@
 #include "SubAnimation.h"
 
-void SubAnimation::setName(string name) {
-	Name = name;
-	isName = SubAnimation::hasName;
+void SubAnimation::setName(std::string name) {
+	ARG_name = name;
+	isName = true;
 }
 
-void SubAnimation::setTexture(string filename) {
+void SubAnimation::setTexture(std::string filename) {
 	if (!texture.loadFromFile(filename)){
-		// error...
+		//error
 	}
 }
 
 void SubAnimation::setLength(float length) {
-	lengthOfAnimation = length;
+	ARG_length = length;
 }
 
-void SubAnimation::setFrames(int howmuchframes) {
-	FrameCounter = howmuchframes;
-	iRect = new sf::IntRect[FrameCounter+1];
+void SubAnimation::setFrames(int framNum) {
+	ARG_framNum = framNum;
+	iRect = new sf::IntRect[ARG_framNum +1];
 }
 
 void SubAnimation::setRect(int x, int y, int width, int height, int frame) {
 	iRect[frame] = sf::IntRect(x, y, width, height);
 }
 
-string SubAnimation::getName() {
+std::string SubAnimation::getName() {
 	if (isName) {
-		return Name;
+		return ARG_name;
 	}
-	else {
-		return "none";
-	}
+	return "none";
 }
 
-int SubAnimation::getFrameCount() {
-	return FrameCounter;
+int SubAnimation::getFrameNum() {
+	return ARG_framNum;
 }
 
 void SubAnimation::setFrame(sf::Sprite * sprite) {
-//	(*sprite).move((*sprite).getTextureRect().width - iRect[w+1].width,(*sprite).getTextureRect().height-iRect[w+1].height);
-	(*sprite).setTextureRect(iRect[w%FrameCounter+1]);
+	(*sprite).setTextureRect(iRect[w%ARG_framNum +1]);
 	(*sprite).setTexture(texture);
-//	std::cout << zegar.getElapsedTime().asSeconds() << std::endl;
-	if (zegar.getElapsedTime().asSeconds() > lengthOfAnimation / FrameCounter) {
+	if (zegar.getElapsedTime().asSeconds() > ARG_length / ARG_framNum) {
 		w++;
 		zegar.restart();
 	}
-
 }
 
 void SubAnimation::resetTimer() {
 	zegar.restart();
-}
-
-SubAnimation::SubAnimation()
-{
 }

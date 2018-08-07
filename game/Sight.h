@@ -24,5 +24,4 @@ public:
 	void setUp(sf::RenderWindow *targetwindow, sf::Sprite * collisionSprites, int NumberSprites, string mode = "real");
 	void update(sf::Vector2f getCPos);
 	void draw();
-	//~Sight();
 };

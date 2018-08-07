@@ -1,24 +1,25 @@
 #include "Events.h"
 
-void Events::Handler(sf::RenderWindow * window) {
-	EscapeButtonPressed = false;
-	EnterButtonPressed = false;
-	BackspaceButtonPressed = false;
+void Events::Handler(sf::RenderWindow * window) 
+{
+	EscapePsd = false;
+	EnterPsd = false;
+	BackspacePsd = false;
 	inputText = false;
-	while ((*window).pollEvent(zdarzenie)) //przyjmuje zdarzenia
+	while ((*window).pollEvent(event))
 	{	
-		switch (zdarzenie.type) {
+		switch (event.type) {
 		case sf::Event::Closed:
 			(*window).close();
 			break;
 		case sf::Event::KeyPressed:
-			key = zdarzenie.key.code;
-			if (zdarzenie.key.code == sf::Keyboard::Key(sf::Keyboard::Key::Escape))
-				EscapeButtonPressed = true;
-			if (zdarzenie.key.code == sf::Keyboard::Key(sf::Keyboard::Key::Enter))
-				EnterButtonPressed = true;
-			if (zdarzenie.key.code == sf::Keyboard::Key(sf::Keyboard::Key::Backspace))
-				BackspaceButtonPressed = true;
+			key = event.key.code;
+			if (event.key.code == sf::Keyboard::Key(sf::Keyboard::Key::Escape))
+				EscapePsd = true;
+			if (event.key.code == sf::Keyboard::Key(sf::Keyboard::Key::Enter))
+				EnterPsd = true;
+			if (event.key.code == sf::Keyboard::Key(sf::Keyboard::Key::Backspace))
+				BackspacePsd = true;
 			break;
 		case sf::Event::TextEntered:
 			inputText = true;
@@ -29,11 +30,11 @@ void Events::Handler(sf::RenderWindow * window) {
 	}
 }
 
-bool Events::getInput(string* input)
+bool Events::getInput(std::string* input)
 {
 	if (inputText) {
-		if(zdarzenie.text.unicode >= 32 && zdarzenie.text.unicode <= 128) {
-			(*input) += char(zdarzenie.text.unicode);
+		if(event.text.unicode >= 32 && event.text.unicode <= 128) {
+			(*input) += char(event.text.unicode);
 		}
 		else if (isBackspacePressed()) {
 			if((*input).size()>0)
@@ -44,24 +45,22 @@ bool Events::getInput(string* input)
 	return false;
 }
 
-sf::Keyboard::Key Events::returnKey() {
+sf::Keyboard::Key Events::returnKey() 
+{
 	return key;
 }
 
-bool Events::isEscapePressed() {
-	return EscapeButtonPressed;
+bool Events::isEscapePressed() 
+{
+	return EscapePsd;
 }
 
 bool Events::isEnterPressed()
 {
-	return EnterButtonPressed;
+	return EnterPsd;
 }
 
 bool Events::isBackspacePressed()
 {
-	return BackspaceButtonPressed;
-}
-
-Events::Events()
-{
+	return BackspacePsd;
 }

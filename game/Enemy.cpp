@@ -11,7 +11,7 @@ Enemy::Enemy()
 {
 }
 
-void Enemy::setUp(sf::Sprite * player, sf::Sprite * collisable,int N_collisable,int N_enemies, sf::Vector2f * coords, string * animations, string * type) {
+void Enemy::setUp(sf::Sprite * player, sf::Sprite * collisable,int N_collisable,int N_enemies, sf::Vector2f * coords, std::string * animations, std::string * type) {
 	ARG_enem = N_enemies;
 	ARG_player = player;
 	ARG_collisable = collisable;
@@ -42,7 +42,7 @@ void Enemy::addEnemy(std::string identity)
 	enemAnim.push_back(&Animation());
 }
 
-void Enemy::addEnemy(sf::Vector2f * coords, string * animations, string * type)
+void Enemy::addEnemy(sf::Vector2f * coords, std::string * animations, std::string * type)
 {
 	enemies.push_back(&przeciwnik());
 	enemies[enemies.size()] = new przeciwnik();
@@ -51,7 +51,7 @@ void Enemy::addEnemy(sf::Vector2f * coords, string * animations, string * type)
 	enemies[enemies.size()]->enemySetUp(ARG_player, *coords, (*enemAnim[enemAnim.size()]).getCurrentFrame(), ARG_collisable, ARG_N_collisable);
 }
 
-void Enemy::enemySets(std::string identificator,sf::Vector2f * coords, string * animations, string type)
+void Enemy::enemySets(std::string identificator,sf::Vector2f * coords, std::string * animations, std::string type)
 {
 	for (int i = enemAnim.size(); i != 0; i--) {
 		if (identificator == enemies[i]->identify()) {

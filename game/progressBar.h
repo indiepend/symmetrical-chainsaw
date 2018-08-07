@@ -30,18 +30,17 @@ public:
 	//\direction "horizontal" or "vertical" - default vertical
 	//\width and height in pixels
 	//\measurable is float which bar shows as max
-	void create(int width,int height,float measurable, Direction dir = Direction::vertical);
-	void setBorder(int thickness, sf::Color color);
-	void setColors(sf::Color barCol, sf::Color bgCol);
+	void create(int,int,float, Direction = Direction::vertical);
+	void setBorder(int, sf::Color);
+	void setColors(sf::Color, sf::Color);
 	void customSprite(sf::Sprite, Type);
-	void placeBar(int x, int y);
+	void placeBar(int, int);
 	//\Brief:
 	//\measured is actual value which bar shows
 	//\if measured is bigger than max nothing happens
-	void update(float measured);
-	void draw(sf::RenderTarget *target);
+	void update(float);
+	void draw(sf::RenderTarget*);
 
 	progressBar();
-	progressBar(int width, int height, float measurable, Direction dir);
-	//~progressBar();
+	progressBar(int, int, float, Direction);
 };

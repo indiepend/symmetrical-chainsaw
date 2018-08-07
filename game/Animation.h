@@ -4,22 +4,41 @@
 
 #pragma once
 
-using namespace std;
-
 class Animation
 {
-	string currentAnimation;
+	std::string ARG_animation;
 	sf::Sprite currentFrame;
 	FileToString loader;
-	int linesCounter,animationCounter,leftby=1,kncp=0;
-	string * lines = NULL;
-	SubAnimation * subanimation = NULL;
-	void updateAnimation();
+	int animCount,timer;
+	std::string* lines = NULL;
+	SubAnimation* subanimation = NULL;
 public:
-	void loadAnimations(string filename);
-	void drawAnimation(sf::RenderWindow * window);
-	void listener(string animation);
-	sf::Sprite * getCurrentFrame();
-	Animation();
-	//~Animation();
+
+	//////////////////////////////////////////////////
+	///\brief
+	///reads animation form from file
+	///file path can be like that
+	///"C://doc/myanimation.txt" or
+	///"myanimation.txt" if animation is inside app folder
+	//////////////////////////////////////////////////
+	void loadAnimations(std::string);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///draws current animation
+	//////////////////////////////////////////////////
+	void drawAnimation(sf::RenderWindow*);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///checks if there is new animation turned on and changes it
+	//////////////////////////////////////////////////
+	void listener(std::string);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///returns pointer to current frame of animation
+	///makes it modifyable for example: to make it move
+	//////////////////////////////////////////////////
+	sf::Sprite* getCurrentFrame();
 };

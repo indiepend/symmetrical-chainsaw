@@ -27,29 +27,68 @@ class Button
 	double R, G, B, q, r, e;
 	bool clicked=false,animationed,animating, renderWindow;
 public:
+	//////////////////////////////////////////////////
+	///\brief
+	///default constructor
+	//////////////////////////////////////////////////
 	Button();
+
+	//////////////////////////////////////////////////
+	///\brief
+	///constructor overload
+	///gets basic parameters to draw button
+	Button(int, int, sf::RenderWindow*, sf::Color = sf::Color::Black, bool = true);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///constructor overload with sf::RenderTexture instead sf::RenderWindow
+	//////////////////////////////////////////////////
+	Button(int width, int height, sf::RenderTexture * renderTexture, sf::RenderWindow * window, sf::Color ofbutton, bool animated = true);
+
 	//width and height in pixels
 	//border can be also used as margin for text
 	//in that case leave last argument empty
 	void createButton(int width, int height, sf::RenderWindow * window, sf::Color ofbutton, bool animated=true);
-	//version with sf::RenderTexture
+	//overload with sf::RenderTexture
 	void createButton(int width, int height, sf::RenderTexture * renderTexture, sf::RenderWindow * window, sf::Color ofbutton, bool animated = true);
 	void checkButton(sf::Color color, sf::Vector2f mouse = sf::Vector2f(0,0));
 	void moveButton(sf::Vector2f move);
 	void setBorder(int thickness, sf::Color colorOfBorder, sf::Color secondColor);
 	void drawButton();
-	//range 0.0-1.0
-	//place it after all text methods
-	//align for text in button can be "left" "center" or "right"
-	void placeButton(float coordx=0,float coordy=0, string align="left");
 
+	//////////////////////////////////////////////////
+	///\brief
+	///range from 0.0(left side of screen) to 1.0(right side of screen)
+	///place it after all text methods
+	///align for text in button can be "left" "center" or "right"
+	//////////////////////////////////////////////////
+	void placeButton(float=0,float=0,string="left");
+
+	//////////////////////////////////////////////////
+	///\brief
+	///checks if button has been clicked
+	//////////////////////////////////////////////////
 	bool isClicked();
+
 	///text methods///
-	void setFont(sf::Font * font);
-	void setCharacterSize(int size);
-	void setString(sf::String textinbutton);
-	void setFillColor(sf::Color oftext);
+	/////////////////////////////////////////////////
 
+	//////////////////////////////////////////////////
+	void setFont(sf::Font*);
 
-	//~Button();
+	//////////////////////////////////////////////////
+	///\brief
+	///default size is 30
+	//////////////////////////////////////////////////
+	void setCharacterSize(int);
+
+	//////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////
+	void setString(sf::String);
+
+	//////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////
+	void setFillColor(sf::Color);
 };

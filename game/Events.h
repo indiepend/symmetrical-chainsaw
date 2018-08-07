@@ -1,21 +1,46 @@
 #include "stdafx.h"
 #pragma once
 
-using namespace std;
-
 class Events
 {
-	sf::Event zdarzenie;
+	sf::Event event;
 	sf::Keyboard::Key key;
-	string keycode;
-	bool EscapeButtonPressed = false, inputText = false, EnterButtonPressed = false, BackspaceButtonPressed = false;
+	bool EscapePsd = false, inputText = false, EnterPsd = false, BackspacePsd = false;
 public:
-	Events();
+	//////////////////////////////////////////////////
+	///\brief
+	///returns true if escape was pressed
+	//////////////////////////////////////////////////
 	bool isEscapePressed();
-	bool isEnterPressed();
-	bool isBackspacePressed();
-	sf::Keyboard::Key returnKey();
-	void Handler(sf::RenderWindow * window);
-	bool getInput(string*);
-};
 
+	//////////////////////////////////////////////////
+	///\brief
+	///returns true if enter was pressed
+	//////////////////////////////////////////////////
+	bool isEnterPressed();
+
+	//////////////////////////////////////////////////
+	///\brief
+	///returns true if backspace was pressed
+	//////////////////////////////////////////////////
+	bool isBackspacePressed();
+
+	//////////////////////////////////////////////////
+	///\brief
+	///returns code of pressed key
+	//////////////////////////////////////////////////
+	sf::Keyboard::Key returnKey();
+
+	//////////////////////////////////////////////////
+	///\brief
+	///returns true if user types
+	///typed characters are added to passed string
+	//////////////////////////////////////////////////
+	bool getInput(std::string*);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///check it every frame for waiting events
+	//////////////////////////////////////////////////
+	void Handler(sf::RenderWindow*);
+};
