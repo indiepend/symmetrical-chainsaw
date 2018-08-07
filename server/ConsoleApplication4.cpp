@@ -5,7 +5,7 @@
 
 ///SERVER APP 0.0.1
 int main() {
-	std::cout << "console server alpha ver. 0.0.1" << std::endl;
+	std::cout << "server ver. 0.0.1" << std::endl;
 	int socQ=0;
 	sf::TcpSocket *tempsock = new sf::TcpSocket;
 	std::string message="",command="";
@@ -21,8 +21,8 @@ int main() {
 
 	}
 
-	while (1) {
-		///ladowanie nowego klienta
+	while (1) {///main loop
+		///check for new client
 		if (listener.accept(*socket[socQ]) == sf::Socket::Done) {
 			std::cout << "connected " <<(*socket[socQ]).getRemoteAddress() << std::endl;
 			(*socket[socQ]).setBlocking(false);
@@ -50,9 +50,10 @@ int main() {
 		}
 		/////////////////////////////////////////////////////////////
 		sf::Socket::Status stat;
+		///checking for disconnections, messages etc. for each client
 		for (int i = 0; i < socQ; i++) {
 			stat = (*socket[i]).receive(msgPack);
-			if (stat == sf::Socket::Status::Done) {
+			if (stat == sf::Socket::Status::Done) {//client sent something
 				msgPack >> command;
 				if (command == "/message") {
 					msgPack >> message;
@@ -67,7 +68,7 @@ int main() {
 					message.clear();
 				}
 			}
-			else if (stat == sf::Socket::Status::Disconnected) {
+			else if (stat == sf::Socket::Status::Disconnected) {//client disconnected
 					socQ--;
 					std::cout << "disconnected " << (*socket[i]).getRemoteAddress() << std::endl;
 					socket.erase(socket.cbegin() + i);
@@ -80,6 +81,6 @@ int main() {
 				}
 		}
 		////////////////////////////////////////////////////////////
-		sf::sleep(sf::seconds(0.5));
+		sf::sleep(sf::seconds(0.5));///half second of idle
 	}
 }
