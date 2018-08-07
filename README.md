@@ -1,5 +1,5 @@
 # symmetrical-chainsaw
 
-Compiled with Microsoft Visual 14.0
+Compiled with Microsoft Visual ver. 14.0
 
-Contains SFML libraries
+Uses SFML libraries ver. 2.5.0
