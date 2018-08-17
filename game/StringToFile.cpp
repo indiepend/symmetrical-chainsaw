@@ -1,39 +1,57 @@
 #include "StringToFile.h"
 
-StringToFile::StringToFile() {
+StringToFile::StringToFile() 
+{
 
 }
 
-void StringToFile::ToFile(string filename, int numberOfLines) {
-	buffer(numberOfLines);
-	loadFile(filename);
+StringToFile::StringToFile(std::string filename, std::string * data, int linesNum)
+{
+	table = data;
+	buffer(linesNum, &loadFile(filename));
 }
 
-void StringToFile::ToFile(string filename, string * FileString, int numberOfLines) {
-	table = FileString;
-	loadFile(filename);
-	buffer(numberOfLines);
+StringToFile::StringToFile(std::string filename, std::vector<std::string>* data)
+{
+	(*storage).clear();
+	storage = data;
+	buffer(&loadFile(filename));
 }
 
-void StringToFile::setString(string * FileString) {
-	table = FileString;
+void StringToFile::ToFile(std::string filename, std::string * data, int linesNum) {
+	table = data;
+	buffer(linesNum,&loadFile(filename));
 }
 
-////////////////////////////////////////////////////
-void StringToFile::loadFile(string file) {
+void StringToFile::ToFile(std::string filename, std::vector<std::string>* data)
+{
+	(*storage).clear();
+	storage = data;
+	buffer(&loadFile(filename));
+}
 
-	plik.open(file, ios::out);
-	if (plik.good() == false) {
-		cout << "Leeeeeeeeeeeeeroy";
-		//exit(0);
+std::fstream StringToFile::loadFile(std::string filename) {
+	std::fstream file;
+	file.open(filename, std::ios::out);
+	if (file.good() == false) {
+		std::cout << "File " << filename << " is corrupted" << std::endl;
 	}
+	return file;
 }
-////////////////////////////////////////////////////
-void StringToFile::buffer(int numberOfLines) {
-	plik.seekp(0, ios_base::end);
-	for (int i=1; i < numberOfLines; i++) {
-		plik << table[i] << endl;
+
+void StringToFile::buffer(int linesNum,std::fstream* file) {
+	(*file).seekp(0, std::ios_base::end);
+	for (int i=1; i <= linesNum; i++) {
+		(*file) << table[i] << std::endl;
 	}
-	plik << table[numberOfLines];
-	plik.close();
+	(*file).close();
+}
+
+void StringToFile::buffer(std::fstream * file)
+{
+	(*file).seekp(0, std::ios_base::end);
+	for (int i = 1; i <= (*storage).size(); i++) {
+		(*file) << table[i] << std::endl;
+	}
+	(*file).close();
 }

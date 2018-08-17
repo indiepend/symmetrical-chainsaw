@@ -1,20 +1,47 @@
 #include "stdafx.h"
 #pragma once
+
 class Camera
 {
-	float x, y;
-	sf::Sprite * prot = NULL;
+	sf::Sprite* prot = NULL;
 	sf::View view;
-	sf::RenderWindow * okno = NULL;
-	sf::FloatRect protp;
-	sf::Vector2f pos,lel,los=sf::Vector2f(0,0);
+	sf::RenderWindow* ARG_window;
+	sf::Vector2f lel,los=sf::Vector2f(0,0);
 public:
+	//////////////////////////////////////////////////
+	///\brief
+	///returns size of view
+	//////////////////////////////////////////////////
 	sf::Vector2f getSize();
+
+	//////////////////////////////////////////////////
+	///\brief
+	///returns current position of view
+	//////////////////////////////////////////////////
 	sf::Vector2f getPosition();
+
+	//////////////////////////////////////////////////
+	///\brief
+	///update of camera in game
+	//////////////////////////////////////////////////
 	void cameraUpdate();
+
+	//////////////////////////////////////////////////
+	///\brief
+	///update of camera in menu
+	//////////////////////////////////////////////////
 	void cameraUpdateMain();
-	Camera();
-	void getValues(sf::Sprite * Protagonist, sf::RenderWindow * window);
-	void getValuesWindow(sf::RenderWindow * window);
-	//~Camera();
+
+	//////////////////////////////////////////////////
+	///\brief
+	///gets values of target it's going to track
+	///and window pointer
+	//////////////////////////////////////////////////
+	void getValues(sf::Sprite*, sf::RenderWindow*);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///gets window pointer for main menu
+	//////////////////////////////////////////////////
+	void getValuesWindow(sf::RenderWindow*);
 };

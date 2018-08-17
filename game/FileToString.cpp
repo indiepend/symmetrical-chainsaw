@@ -1,43 +1,38 @@
 #include "FileToString.h"
 
-
-
-FileToString::FileToString()
-{
-}
-
-void FileToString::loadUp(string filename) {
+void FileToString::loadUp(std::string filename) {
 	buffer(&loadFile(filename));
 }
 
-string * FileToString::getString() {
-	return table;
+std::string* FileToString::getString() {
+	return storage.data();
 }
 
 int FileToString::getNumber() {
-	return lines-1;
+	return storage.size()-1;
 }
 
-//////////////////////////////////////////
-fstream FileToString::loadFile(string file) {
-	fstream plik;
-	plik.open(file, ios::in);
-	if (plik.good() == false) {
-		cout << "Leeeeeeeeeeeeeroy" << file << endl;
-	//	exit(0);
-	}
-	return plik;
+std::vector<std::string>* FileToString::getVector()
+{
+	return &storage;
 }
-////////////////////////////////////////////////////
-void FileToString::buffer(fstream * file) {
-	int w = 1;
-	string tekst;
-	lines = (int)count(istreambuf_iterator<char>(*file), istreambuf_iterator<char>(), '\n') + 2;
-	table = new string[lines];
+
+std::fstream FileToString::loadFile(std::string filename) {
+	std::fstream file;
+	file.open(filename, std::ios::in);
+	if (file.good() == false) {
+		std::cout << "File " << filename <<  " is corrupted" << std::endl;
+	}
+	return file;
+}
+
+void FileToString::buffer(std::fstream * file) {
+	storage.clear();
+	storage.push_back(std::string());
+	std::string tekst;
 	(*file).seekg(0);
 	while (getline((*file), tekst)) {
-		table[w] = tekst;
-		w++;
+		storage.push_back(tekst);
 	}
 	(*file).close();
 }

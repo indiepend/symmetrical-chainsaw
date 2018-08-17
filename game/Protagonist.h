@@ -14,7 +14,7 @@ class Protagonist :private Movin, private Collision, public AnimateAble
 public:
 	Protagonist();
 	void Check();
-	void setUp(sf::Vector2f coords, sf::Sprite * Picture, sf::Sprite MayCollisionPictures[], int HowManyCSprites,sf::Keyboard::Key * setts);
+	void setUp(sf::Vector2f coords, sf::Sprite * Picture, sf::Sprite* MayCollisionPictures, int HowManyCSprites,sf::Keyboard::Key * setts);
 	void modifyHealth(int mod);
 	bool noctovision();
 	void pause(bool isPauseTrue=true);

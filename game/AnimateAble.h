@@ -1,24 +1,30 @@
 #include "stdafx.h"
 #pragma once
 
-/*
-Inherite class
--SetAnimation - sets animation on demand
--GetAnimation - if in last frame SetAnimation was called it gives setted animation in other way it gives "default" animation
-*/
-
-using namespace std;
 class AnimateAble
 {
-	//animate - was setanimation called this frame
-	bool isAnimatable = false;
-	string animation;
+	bool isAnimatable = true;
+	std::string ARG_name;
 protected:
-	void SetAnimation(string name);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///set name of animation you want to play
+	//////////////////////////////////////////////////
+	void SetAnimation(std::string);
+
 public:
+
+	//////////////////////////////////////////////////
+	///\brief
+	///checks if new animation is ready
+	//////////////////////////////////////////////////
 	bool animatable();
-	string GetAnimation();
-	AnimateAble();
-	//~AnimateAble();
+
+	//////////////////////////////////////////////////
+	///\brief
+	///returns name of last set animation
+	//////////////////////////////////////////////////
+	std::string GetAnimation();
 };
 

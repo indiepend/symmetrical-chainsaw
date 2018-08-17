@@ -1,7 +1,7 @@
 #include "AnimateAble.h"
 
-void AnimateAble::SetAnimation(string name) {
-	animation = name;
+void AnimateAble::SetAnimation(std::string name) {
+	ARG_name = name;
 	isAnimatable = true;
 }
 
@@ -9,22 +9,13 @@ bool AnimateAble::animatable() {
 	return isAnimatable;
 }
 
-string AnimateAble::GetAnimation() {
+std::string AnimateAble::GetAnimation() {
 	if (isAnimatable == true) {
 		isAnimatable = false;
-		return animation;
+		return ARG_name;
 	}
 	else {
 		isAnimatable = false;
 		return "default";
 	}
 }
-
-AnimateAble::AnimateAble()
-{
-}
-
-
-//AnimateAble::~AnimateAble()
-//{
-//}

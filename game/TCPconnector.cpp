@@ -14,7 +14,7 @@ void TCPconnector::connect(sf::IpAddress serverAdress)
 		// error...
 	}
 	connectPack << "connect";
-	serverSocket.send(connectPack);
+	serverSocket.send(sf::Packet());
 }
 
 bool TCPconnector::lostConnect()
@@ -25,6 +25,26 @@ bool TCPconnector::lostConnect()
 bool TCPconnector::newConnect()
 {
 	return newC;
+}
+
+bool TCPconnector::receiveMessage(sf::Packet *msg)
+{
+	if (newMsg) {
+		newMsg = false;
+		(*msg) = message;
+		message.clear();
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void TCPconnector::sendMessage(std::string mess)
+{
+	sf::Packet temp;
+	temp << "/message" << mess;
+	serverSocket.send(temp);
 }
 
 sf::Packet TCPconnector::getNewCon()
@@ -41,28 +61,40 @@ sf::Packet TCPconnector::getLostCon()
 
 void TCPconnector::receive()
 {
-	serverSocket.receive(pack);
-	pack >> action;
-	if (action == "add") {
-		pack >> clients;
-		for (int i = 0; i < clients; i++) {
-			pack >> adress;
-			sf::IpAddress ip(adress);
-			(*ARG_udp).addRepicient(ip);
-			newC = true;
+	sf::Socket::Status stat=serverSocket.receive(pack);
+	if (stat == sf::Socket::Status::Partial) {
+		while (stat == sf::Socket::Status::Partial) {
+			stat = serverSocket.receive(pack);
 		}
 	}
-	else if (action == "sub") {
-		pack >> clients;
-		for (int i = 0; i < clients; i++) {
-			pack >> adress;
-			sf::IpAddress ip(adress);
-			(*ARG_udp).removeRepicient(ip);
-			lostC = true;
+	if (stat == sf::Socket::Status::Done) {
+		pack >> action;
+		std::cout << action << std::endl;
+		if (action == "add") {
+			pack >> clients;
+			for (int i = 0; i < clients; i++) {
+				pack >> adress;
+				sf::IpAddress ip(adress);
+				(*ARG_udp).addRepicient(ip);
+				newC = true;
+			}
 		}
-	}
-	else if (action == "sets") {
+		else if (action == "sub") {
+			pack >> clients;
+			for (int i = 0; i < clients; i++) {
+				pack >> adress;
+				sf::IpAddress ip(adress);
+				(*ARG_udp).removeRepicient(ip);
+				lostC = true;
+			}
+		}
+		else if (action == "sets") {
 
+		}
+		else if (action == "/message") {
+			message = pack;
+			newMsg = true;
+		}
 	}
 }
 
@@ -74,4 +106,3 @@ void TCPconnector::disconnect()
 TCPconnector::TCPconnector()
 {
 }
-

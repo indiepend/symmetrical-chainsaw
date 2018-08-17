@@ -35,7 +35,7 @@ void przeciwnik::AI() {
 	}
 }
 
-void przeciwnik::enemySetUp(sf::Sprite * player, sf::Vector2f coords,sf::Sprite * Picture, sf::Sprite MayCollisionPictures[], int HowManyCSprites) {
+void przeciwnik::enemySetUp(sf::Sprite * player, sf::Vector2f coords,sf::Sprite * Picture, sf::Sprite* MayCollisionPictures, int HowManyCSprites) {
 	Collision::setUp(Picture, MayCollisionPictures, HowManyCSprites);
 	ziomus = Picture;
 	(*ziomus).setPosition(coords);

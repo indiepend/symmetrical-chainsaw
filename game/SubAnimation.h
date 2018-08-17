@@ -1,36 +1,71 @@
 #include "stdafx.h"
-#include "Collision.h"
-
 #pragma once
 
-using namespace std;
-
-class SubAnimation :public Collision
+class SubAnimation
 {
-	string Name;
-	int FrameCounter;
 	sf::IntRect * iRect = NULL;
 	sf::Texture texture;
-	sf::Sprite frame;
 	sf::Clock zegar;
-	float lengthOfAnimation = 1;
-	int x, y, width, height,w=0;
+
+	std::string ARG_name;
+	int ARG_framNum, w=0;
+	float ARG_length = 1;
 	bool isName=false;
-	enum {
-		hasName = 1
-	};
 public:
-	void setName(string name);
+	//////////////////////////////////////////////////
+	///\brief
+	///set name of animation which is its ID
+	///you can get it by getName()
+	//////////////////////////////////////////////////
+	void setName(std::string name);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///set filename and load texture of frames
+	//////////////////////////////////////////////////
+	void setTexture(std::string);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///set number of frames which will be shown
+	//////////////////////////////////////////////////
+	void setFrames(int);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///set lenght of animation
+	//////////////////////////////////////////////////
+	void setLength(float);
+
+	/////////////////////////////////////////////////
+	///\brief
+	///set rectangle of texture which will be shown in selected frame
+	/////////////////////////////////////////////////
+	void setRect(int, int, int, int, int = 1);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///change to new frame or
+	///change shown sprite to this animation
+	//////////////////////////////////////////////////
+	void setFrame(sf::Sprite*);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///resets time which passed while it wasn't ready to updated repeatedly
+	//////////////////////////////////////////////////
 	void resetTimer();
-	void setTexture(string filename);
-	void setFrames(int howmuchframes);
-	void setLength(float length);
-	int getFrameCount();
-	void setRect(int x, int y, int width, int height, int numberOfFrame = 1);
 
-	string getName();
-	void setFrame(sf::Sprite * sprite);
+	//////////////////////////////////////////////////
+	///\brief
+	///returns number of frames
+	//////////////////////////////////////////////////
+	int getFrameNum();
 
-	SubAnimation();
-	//~SubAnimation();
+	//////////////////////////////////////////////////
+	///\brief
+	///returns name of animation
+	///or "none" if there isn't any
+	//////////////////////////////////////////////////
+	std::string getName();
 };

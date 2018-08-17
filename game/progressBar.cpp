@@ -5,10 +5,9 @@ progressBar::progressBar()
 }
 
 progressBar::progressBar(int width, int height, float measurable, Direction dir){
-	ARG_width = width;
-	ARG_height = height;
-	ARG_measurable = measurable;
-	bgRend.create(width, height);
+	bg.setSize(sf::Vector2f(width, height));
+	bg.setOrigin(bg.getLocalBounds().width / 2, bg.getLocalBounds().height / 2);
+
 	ARG_dir = dir;
 	if (dir == Direction::vertical) {
 		step = measurable / width;
@@ -19,11 +18,9 @@ progressBar::progressBar(int width, int height, float measurable, Direction dir)
 }
 
 void progressBar::create(int width, int height, float measurable, Direction dir) {
-	ARG_width = width;
-	ARG_height = height;
-	ARG_measurable = measurable;
-	bgRend.create(width, height);
-	barRend.create(width, height);
+	bg.setSize(sf::Vector2f(width, height));
+	bg.setOrigin(bg.getLocalBounds().width / 2, bg.getLocalBounds().height / 2);
+
 	ARG_dir = dir;
 	if (dir == Direction::vertical) {
 		step = height / measurable;
@@ -34,54 +31,41 @@ void progressBar::create(int width, int height, float measurable, Direction dir)
 }
 
 void progressBar::placeBar(int x, int y) {
-	ARG_coordX = x;
-	ARG_coordY = y;
+	bar.setPosition(x, y);
+	bg.setPosition(sf::Vector2f(x, y));
 }
 
 void progressBar::update(float measured) {
-	bg.setTexture(bgRend.getTexture());
-	bar.setTexture(barRend.getTexture());
-	bg.setOrigin(bg.getLocalBounds().width / 2, bg.getLocalBounds().height / 2);
-	bar.setOrigin(bar.getLocalBounds().width / 2, bar.getLocalBounds().height / 2);
-	bg.setPosition((float)ARG_coordX, (float)ARG_coordY);
-	bar.setPosition((float)ARG_coordX, (float)ARG_coordY);
-	border.setPosition((float)ARG_coordX, (float)ARG_coordY);
 	if (ARG_dir == Direction::vertical) {
-		bar.setTextureRect(sf::Rect<int>(0, 0, ARG_width, (int)(measured*step)));
+		bar.setSize(sf::Vector2f(bg.getSize().x, measured*step));
 	}
 	else if (ARG_dir == Direction::horizontal) {
-		bar.setTextureRect(sf::Rect<int>(0, 0, (int)(measured*step), ARG_height));
+		bar.setSize(sf::Vector2f(measured*step, bg.getSize().y));
 	}
+	bar.setOrigin(bar.getLocalBounds().width / 2, bar.getLocalBounds().height / 2);
 }
 
 void progressBar::draw(sf::RenderTarget *target) {
-	target->draw(border);
 	target->draw(bg);
 	target->draw(bar);
 }
 
 void progressBar::setBorder(int thickness, sf::Color color) {
-	borderRend.create(ARG_width + 2 * thickness, ARG_height + 2 * thickness);
-	borderRend.clear(color);
-	borderRend.display();
-	border.setTexture(borderRend.getTexture());
-	border.setOrigin(border.getLocalBounds().width / 2, border.getLocalBounds().height / 2);
+	bg.setOutlineThickness(thickness);
+	bg.setOutlineColor(color);
+	bg.setOrigin(bg.getLocalBounds().width / 2-thickness, bg.getLocalBounds().height / 2-thickness);
 }
 
 void progressBar::setColors(sf::Color barCol, sf::Color bgCol) {
-	ARG_barColor = barCol;
-	barRend.clear(barCol);
-	barRend.display();
-	ARG_bgColor = bgCol;
-	bgRend.clear(bgCol);
-	bgRend.display();
+	bar.setFillColor(barCol);
+	bg.setFillColor(bgCol);
 }
 
-void progressBar::customSprite(sf::Sprite cSprite, Type typeOfSprite) {
-	if (Type::backgroundSprite == typeOfSprite) {
-		bg = cSprite;
+void progressBar::customTexture(sf::Texture* texture, Type typeOfSprite) {
+	if (Type::background == typeOfSprite) {
+		bg.setTexture(texture);
 	}
-	else if (Type::barSprite == typeOfSprite) {
-		bar = cSprite;
+	else if (Type::bar == typeOfSprite) {
+		bar.setTexture(texture);
 	}
 }

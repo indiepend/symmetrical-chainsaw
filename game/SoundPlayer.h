@@ -5,9 +5,34 @@ class SoundPlayer
 {
 	sf::SoundBuffer buff;
 public:
+	//////////////////////////////////////////////////
+	///\brief
+	///replace of soundbuffer
+	///file path can be like that
+	///"C://doc/mysound.wav" or
+	///"mysound.wav" if animation is inside app folder
+	//////////////////////////////////////////////////
+	SoundPlayer(std::string);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///loads sound
+	///file path can be like that
+	///"C://doc/mysound.wav" or
+	///"mysound.wav" if animation is inside app folder
+	//////////////////////////////////////////////////
+	void loadUp(std::string);
+
+	//////////////////////////////////////////////////
+	///\brief
+	///gives pointer to underlying soundbuffer
+	//////////////////////////////////////////////////
+	sf::SoundBuffer* getBuffer();
+
+	//////////////////////////////////////////////////
+	///\brief
+	///default constructor
+	//////////////////////////////////////////////////
 	SoundPlayer();
-	SoundPlayer(std::string filename);
-	void loadUp(std::string filename);
-	sf::SoundBuffer * getBuffer();
 };
 

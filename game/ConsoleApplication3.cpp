@@ -21,7 +21,7 @@
 
 #include "GameRun.h"
 /*******************************************************************************
-Ver. 0.1.26 debug nr. 1 / SFML ver 2.5.0 / 32-bit debug
+Ver. 0.1.27 debug nr. 1 / SFML ver 2.5.0 / 32-bit debug
 
 zmiany od 0.1.2:
 -wybieranie sterowania
@@ -36,6 +36,7 @@ zmiany od 0.1.2:
 *pasek zycia
 -ulepszone menu
 *dzwieki menu
+-chat
 
 zmiany od 0.1.1:
 -wprowadzony miernik czasu w gore i w dol(nie wiem jakim cudem dziala; do przepisania)
@@ -185,9 +186,7 @@ int main()
 			(*filtr).drawNoctovision(kamera.getPosition());
 			hud.draw();
 			wzrok.draw();
-			//if (game_menu.pauseCheck(zdarzenia.isEscapePressed()) == false) {
-				game_menu.inGameDraw();
-			//}
+			game_menu.inGameDraw();
 			window.display();
 		}
 		if (meni.getOP() == 2) {
@@ -198,6 +197,7 @@ int main()
 				map.loadUp("mapa2.txt", &window);
 				playerAnim.loadAnimations("anim.txt");
 				hud.setUp(&window, map.Collisionable(), map.CollisionNum(), playerAnim.getCurrentFrame());
+				hud.setEvents(&zdarzenia,&sieci);
 				bohater.setUp(map.PlayerCoords(), playerAnim.getCurrentFrame(), map.Collisionable(), map.CollisionNum(), meni.getSetts());
 				kamera.getValues(playerAnim.getCurrentFrame(), &window);
 				//(*filtr).setNoctovision(sf::Vector2i(kamera.getSize()));
@@ -207,7 +207,7 @@ int main()
 			}
 			///////////////////////////////////////////////////////////////////////////////
 			//(*filtr).activeNoctovision(bohater.noctovision());
-			hud.update(50);
+			hud.netUpdate(50);
 			bohater.Check();
 			playerAnim.listener(bohater.GetAnimation());
 			kamera.cameraUpdate();
@@ -221,7 +221,7 @@ int main()
 			(*wrogowie).draw(&window);
 			playerAnim.drawAnimation(&window);
 			//(*filtr).drawNoctovision(kamera.getPosition());
-			hud.draw();
+			hud.netDraw();
 			window.display();
 		}
 	}

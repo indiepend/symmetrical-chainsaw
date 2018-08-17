@@ -22,7 +22,7 @@ private:
 	void falls();
 	void AI();
 public:
-	void enemySetUp(sf::Sprite * player, sf::Vector2f coords, sf::Sprite * Picture, sf::Sprite MayCollisionPictures[], int HowManyCSprites);
+	void enemySetUp(sf::Sprite * player, sf::Vector2f coords, sf::Sprite * Picture, sf::Sprite* MayCollisionPictures, int HowManyCSprites);
 	void enemyUpdate();
 	void modifyHealth(float mod);
 	virtual void setIdentifier(std::string identifier);

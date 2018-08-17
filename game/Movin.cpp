@@ -53,7 +53,6 @@
 	int Movin::Fall(int V0fall) {
 		czas3 += zegar.getElapsedTime();
 		grawitacja2 = pow(czas3.asSeconds()+0.7, 2)*6;
-		std::cout << grawitacja2 << std::endl;
 		if (grawitacja2 > 0.01)
 			return grawitacja2;
 		else
