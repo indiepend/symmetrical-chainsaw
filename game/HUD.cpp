@@ -26,6 +26,10 @@ void HUD::setEvents(Events * event,Network* net)
 	netChat = new Chat();
 	netChat->setUp(&forChat, sf::IntRect(900, 520, 380, 200), ARG_event);
 }
+void HUD::setEvents(Events * event)
+{
+	ARG_event = event;
+}
 
 void HUD::update(float Points) {
 	counter.update();
@@ -68,9 +72,31 @@ void HUD::netDraw()
 	mapka.draw();
 }
 
+void HUD::createlog()
+{
+	counter.createlog();
+}
+
+void HUD::makescreenshot()
+{
+	std::cout << "yup " << endl;
+	sf::Texture temptext;
+	temptext.create(okno->getSize().x, okno->getSize().y);
+	temptext.update(*okno);
+	std::chrono::system_clock::time_point today = std::chrono::system_clock::now();
+	std::time_t tt = std::chrono::system_clock::to_time_t(today);
+	char buffer[80];
+	struct tm * timeinfo = new tm();
+	localtime_s(timeinfo, &tt);
+	strftime(buffer, 80, "screenshot-%dDay-%mMonth-%yYear-%H-%M-%S.jpg", timeinfo);
+	sf::Image temp = temptext.copyToImage();
+	temp.saveToFile(buffer);
+}
+
 void HUD::restart() {
 	licznik.restart();
 }
+
 void HUD::stop() {
 	licznik.stop();
 }
