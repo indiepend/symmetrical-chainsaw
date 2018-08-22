@@ -1,11 +1,5 @@
 #include "Filters.h"
 
-
-Filters::Filters()
-{
-
-}
-
 void Filters::setWindow(sf::RenderWindow * wind) {
 	targetwindow = wind;
 }

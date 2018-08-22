@@ -41,7 +41,9 @@ void Network::refresh(std::string animation,sf::Vector2f coords)
 void Network::connect(Enemy *enemy)
 {
 	ARG_enem = enemy;
-	sf::IpAddress adress((*FtS.getString()));
+	std::string* address = FtS.getString();
+	std::cout << address[1] << std::endl;
+	sf::IpAddress adress(address[1]);
 	TCPcon.connect(adress);
 }
 

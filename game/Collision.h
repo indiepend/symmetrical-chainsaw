@@ -13,7 +13,7 @@ public:
 	///pass necessary things
 	///main target then things it can collide with and number of these last
 	//////////////////////////////////////////////////
-	Collision(sf::Sprite * player, sf::Sprite* CollisableSprites, int SpriteNum);
+	Collision(sf::Sprite * player, sf::Sprite* collisable, int SpriteNum);
 
 	//////////////////////////////////////////////////
 	///\brief
@@ -26,7 +26,7 @@ public:
 	///pass necessary things
 	///main target then things it can collide with and number of these last
 	//////////////////////////////////////////////////
-	void setUp(sf::Sprite * player, sf::Sprite* CollisableSprites, int SpriteNum);
+	void setUp(sf::Sprite * player, sf::Sprite* collisable, int SpriteNum);
 
 	//////////////////////////////////////////////////
 	///\brief

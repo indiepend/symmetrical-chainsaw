@@ -107,15 +107,18 @@ void menu::loadMainMenu() {
 	fastsprite.setPosition(500, 500);
 	tlo.create(1280, 720);
 	tlo.clear();
-	for (int i = 100; i >= 0; i--) {
-		sf::RenderStates states;
-		blend = sf::BlendAlpha;
-		blend.colorSrcFactor = blend.One;
-		states.blendMode = blend;
-		states.shader = &blurShader;
-		tlo.draw(backgroundsprite, states);
+
+	tlo2.create(1280, 720);
+	tlo2.clear();
+
+	for (int i = 50; i >= 0; i--) {
+		tlo.draw(backgroundsprite,&blurShader);
 		tlo.display();
 		backgroundsprite.setTexture(tlo.getTexture());
+
+		tlo2.draw(backgroundsprite, &blurShader);
+		tlo2.display();
+		backgroundsprite.setTexture(tlo2.getTexture());
 	}
 	backgroundsprite.setPosition(0, 0);
 

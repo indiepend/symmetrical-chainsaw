@@ -11,7 +11,11 @@ void TCPconnector::connect(sf::IpAddress serverAdress)
 	stat = serverSocket.connect(serverAdress, 33253);
 	if (stat != sf::Socket::Done)
 	{
-		// error...
+		std::cout << "not connected" << std::endl;
+		stat = serverSocket.connect(sf::IpAddress("127.0.0.1"), 33253);
+	}
+	else {
+		std::cout << "connected" << std::endl;
 	}
 	connectPack << "connect";
 	serverSocket.send(sf::Packet());
