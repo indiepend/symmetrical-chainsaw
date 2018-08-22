@@ -18,7 +18,5 @@ public:
 	void activeNoctovision(bool noct);
 	void drawNoctovision(sf::Vector2f position);
 	void setWindow(sf::RenderWindow * wind);
-	Filters();
-	//~Filters();
 };
 

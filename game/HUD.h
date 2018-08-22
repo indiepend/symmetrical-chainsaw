@@ -4,6 +4,7 @@
 #include "Events.h"
 #include "Chat.h"
 #include "Network.h"
+#include "framecounter.h"
 
 #pragma once
 class HUD
@@ -18,6 +19,7 @@ class HUD
 	Events *ARG_event;
 	Chat *netChat;
 	Network *ARG_net;
+	framecounter counter;
 public:
 	HUD();
 	void setUp(sf::RenderWindow * window, sf::Sprite * collisable, int HowMany, sf::Sprite * players, int HowManyPlayers = 1);

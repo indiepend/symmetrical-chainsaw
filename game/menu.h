@@ -22,7 +22,7 @@ class menu
 	sf::Shader blurShader,pixelShader;
 	sf::Sprite backgroundsprite,buttons[4],fastsprite;
 	sf::RenderWindow * targetwindow = NULL;
-	sf::RenderTexture tlo;
+	sf::RenderTexture tlo,tlo2;
 	sf::RenderTexture rt_S;
 	sf::Sprite bg_S;
 	sf::Text setts[10];
@@ -34,7 +34,6 @@ class menu
 	sf::Keyboard::Key keyBOARD[6];
 	sf::CircleShape circle;
 	sf::Sound sound;
-	sf::BlendMode blend;
 	////////////////////////zmienne/////////////////////////
 	int qp = 1;/*przelacznik zakladek*/
 	int	op = 0;/*przelacznik trybow gry*/

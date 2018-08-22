@@ -1,7 +1,6 @@
 #include "HUD.h"
 
 
-
 HUD::HUD()
 {
 
@@ -10,12 +9,14 @@ HUD::HUD()
 void HUD::setUp(sf::RenderWindow * window, sf::Sprite * collisable, int HowMany, sf::Sprite * players, int HowManyPlayers) {
 	okno = window;
 	target = window;
+	counter.setup();
 	licznik.start(0);
 	mapka.create(window,collisable,HowMany,players);
 	lifePoints.create(200, 25, 100,progressBar::Direction::horizontal);
 	lifePoints.placeBar(115, 690);
 	lifePoints.setColors(sf::Color(150,0,0),sf::Color(0,0,0));
 	lifePoints.setBorder(2, sf::Color::Black);
+	if (forChat.loadFromFile("Arial.ttf"));
 }
 
 void HUD::setEvents(Events * event,Network* net)
@@ -23,16 +24,17 @@ void HUD::setEvents(Events * event,Network* net)
 	ARG_event = event;
 	ARG_net = net;
 	netChat = new Chat();
-	if (forChat.loadFromFile("Arial.ttf"));
 	netChat->setUp(&forChat, sf::IntRect(900, 520, 380, 200), ARG_event);
 }
 
 void HUD::update(float Points) {
+	counter.update();
 	mapka.update();
 	lifePoints.update(Points);
 }
 
 void HUD::netUpdate(float Points) {
+	counter.update();
 	mapka.update();
 	lifePoints.update(Points);
 	netChat->update(okno);
@@ -47,11 +49,12 @@ void HUD::netUpdate(float Points) {
 
 void HUD::draw() {
 	tempView = (*okno).getView();
+	mapka.draw();
 	(*okno).setView((*okno).getDefaultView());
 	licznik.drawCzas(okno);
 	lifePoints.draw(target);
+	counter.draw(okno, &forChat);
 	(*okno).setView(tempView);
-	mapka.draw();
 }
 
 void HUD::netDraw()
