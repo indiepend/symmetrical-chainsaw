@@ -152,6 +152,7 @@ int main()
 				bohater.setUp(map.PlayerCoords(), playerAnim.getCurrentFrame(), map.Collisionable(), map.CollisionNum(),meni.getSetts());
 				(*wrogowie).setUp(playerAnim.getCurrentFrame(), map.Collisionable(), map.CollisionNum(), map.EnemyNumber(), map.EnemyCoords(), map.eAnimSource(), map.EnemyType());
 				hud.setUp(&window, map.Collisionable(), map.CollisionNum(), playerAnim.getCurrentFrame());
+				hud.setEvents(&zdarzenia);
 				kamera.getValues(playerAnim.getCurrentFrame(), &window);
 				(*filtr).setNoctovision(sf::Vector2i(kamera.getSize()));
 				wzrok.setUp(&window, map.Collisionable(), map.CollisionNum());
@@ -188,6 +189,9 @@ int main()
 			wzrok.draw();
 			game_menu.inGameDraw();
 			window.display();
+			if (zdarzenia.returnKey() == sf::Keyboard::Key::F12) {
+				hud.makescreenshot();
+			}
 		}
 		if (meni.getOP() == 2) {
 			if(c==1){ //wydarzenia wywolywane raz podczas trybu
@@ -223,8 +227,12 @@ int main()
 			//(*filtr).drawNoctovision(kamera.getPosition());
 			hud.netDraw();
 			window.display();
+			if (zdarzenia.returnKey() == sf::Keyboard::Key::F12) {
+				hud.makescreenshot();
+			}
 		}
 	}
+	hud.createlog();
 }
 
 //int main() {

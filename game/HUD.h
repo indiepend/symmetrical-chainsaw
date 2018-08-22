@@ -24,11 +24,13 @@ public:
 	HUD();
 	void setUp(sf::RenderWindow * window, sf::Sprite * collisable, int HowMany, sf::Sprite * players, int HowManyPlayers = 1);
 	void setEvents(Events*,Network*);
+	void setEvents(Events*);
 	void update(float Points);
 	void netUpdate(float Points);
 	void draw();
 	void netDraw();
-
+	void createlog();
+	void makescreenshot();
 	void restart();
 	void stop();
 };

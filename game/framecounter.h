@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "StringToFile.h"
+#include <chrono>
+#include <ctime>
+
 #pragma once
 class framecounter
 {

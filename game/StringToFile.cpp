@@ -13,7 +13,6 @@ StringToFile::StringToFile(std::string filename, std::string * data, int linesNu
 
 StringToFile::StringToFile(std::string filename, std::vector<std::string>* data)
 {
-	(*storage).clear();
 	storage = data;
 	buffer(&loadFile(filename));
 }
@@ -25,7 +24,6 @@ void StringToFile::ToFile(std::string filename, std::string * data, int linesNum
 
 void StringToFile::ToFile(std::string filename, std::vector<std::string>* data)
 {
-	(*storage).clear();
 	storage = data;
 	buffer(&loadFile(filename));
 }
@@ -51,7 +49,7 @@ void StringToFile::buffer(std::fstream * file)
 {
 	(*file).seekp(0, std::ios_base::end);
 	for (int i = 1; i <= (*storage).size(); i++) {
-		(*file) << table[i] << std::endl;
+		(*file) << (*storage)[i-1] << std::endl;
 	}
 	(*file).close();
 }
