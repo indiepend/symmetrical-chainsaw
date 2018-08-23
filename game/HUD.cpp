@@ -1,6 +1,18 @@
 #include "HUD.h"
 
 
+void HUD::ss_internal(sf::Texture* temptext)
+{
+	std::chrono::system_clock::time_point today = std::chrono::system_clock::now();
+	std::time_t tt = std::chrono::system_clock::to_time_t(today);
+	char buffer[80];
+	struct tm * timeinfo = new tm();
+	localtime_s(timeinfo, &tt);
+	strftime(buffer, 80, "screenshot-%dDay-%mMonth-%yYear-%H-%M-%S.jpg", timeinfo);
+	sf::Image temp = temptext->copyToImage();
+	temp.saveToFile(buffer);
+}
+
 HUD::HUD()
 {
 
@@ -16,7 +28,7 @@ void HUD::setUp(sf::RenderWindow * window, sf::Sprite * collisable, int HowMany,
 	lifePoints.placeBar(115, 690);
 	lifePoints.setColors(sf::Color(150,0,0),sf::Color(0,0,0));
 	lifePoints.setBorder(2, sf::Color::Black);
-	if (forChat.loadFromFile("Arial.ttf"));
+	if (forChat.loadFromFile("Arial.ttf")){}
 }
 
 void HUD::setEvents(Events * event,Network* net)
@@ -79,18 +91,10 @@ void HUD::createlog()
 
 void HUD::makescreenshot()
 {
-	std::cout << "yup " << endl;
-	sf::Texture temptext;
-	temptext.create(okno->getSize().x, okno->getSize().y);
-	temptext.update(*okno);
-	std::chrono::system_clock::time_point today = std::chrono::system_clock::now();
-	std::time_t tt = std::chrono::system_clock::to_time_t(today);
-	char buffer[80];
-	struct tm * timeinfo = new tm();
-	localtime_s(timeinfo, &tt);
-	strftime(buffer, 80, "screenshot-%dDay-%mMonth-%yYear-%H-%M-%S.jpg", timeinfo);
-	sf::Image temp = temptext.copyToImage();
-	temp.saveToFile(buffer);
+	ss_texture = new sf::Texture();
+	ss_texture->create(okno->getSize().x, okno->getSize().y);
+	ss_texture->update(*okno);
+	ss_thr = new thread(&HUD::ss_internal,this,ss_texture);
 }
 
 void HUD::restart() {

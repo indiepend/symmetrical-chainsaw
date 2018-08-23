@@ -4,8 +4,6 @@
 #include "VirtLoad.h"
 #pragma once
 
-using namespace std;
-
 /*
 schemat pliku mapy:
 -naglowek:
@@ -30,22 +28,23 @@ private:
 	sf::Sprite tempS;
 	sf::Texture tempT;
 	sf::Vector2f tempV;
-	string tempStr;
+	std::string tempStr;
 	std::vector <sf::Texture> V_textures;
 	std::vector <sf::Sprite> V_Hsprites;
-	std::vector <sf::Sprite> V_Ssprites;
+	std::vector <sf::Sprite> V_ForwImgs;
+	std::vector <sf::Sprite> V_BackImgs;
 	std::vector <sf::Vector2f> V_EnemCoord;
-	std::vector <string> V_EnemType;
-	std::vector <string> V_AnimSrc;
+	std::vector <std::string> V_EnemType;
+	std::vector <std::string> V_AnimSrc;
 	sf::RenderTarget *drawTarget = NULL;
 	sf::Font *A_font = NULL;
 	sf::Text *A_texts = NULL;
 	sf::Vector2f *A_EnemCoord = NULL;
 	sf::Vector2f* A_ProtCoord = NULL;
 
-	string *A_Lines = NULL;
-	string *A_AnimSrc = NULL;
-	string *A_EnemType = NULL;
+	std::string *A_Lines = NULL;
+	std::string *A_AnimSrc = NULL;
+	std::string *A_EnemType = NULL;
 	int N_Lines = 0;
 	int N_texts = 0, N_fonts = 0;//texts
 	int N_textures = 0, N_spritesM = 0, N_spritesT = 0;//sprites
@@ -56,7 +55,8 @@ private:
 	void reset();
 	void loadtexture(int * i);
 	void loadfont(int * i);
-	void loadspriteM(int * i);
+	void loadBackSprite(int * i);
+	void loadForwSprite(int * i);
 	void loadspriteT(int * i);
 	void loadtext(int * i);
 	void setStart(int * i);
@@ -66,14 +66,15 @@ private:
 
 public:
 	loadmap();
-	void loadUp(string map, sf::RenderTarget * target);
+	void loadUp(std::string map, sf::RenderTarget * target);
 	void drawText();
-	void drawSoftSprites();
-	void drawHardSprites();
+	void drawForwImgs();
+	void drawBackImgs();
+	void drawCollisables();
 	sf::Vector2f PlayerCoords();
 	sf::Vector2f * EnemyCoords();
-	string * eAnimSource();
-	string * EnemyType();
+	std::string * eAnimSource();
+	std::string * EnemyType();
 	int CollisionNum();
 	int EnemyNumber();
 	sf::Sprite * Collisionable();

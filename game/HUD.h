@@ -5,6 +5,7 @@
 #include "Chat.h"
 #include "Network.h"
 #include "framecounter.h"
+#include "thread"
 
 #pragma once
 class HUD
@@ -20,6 +21,11 @@ class HUD
 	Chat *netChat;
 	Network *ARG_net;
 	framecounter counter;
+
+
+	std::thread* ss_thr;
+	sf::Texture* ss_texture;
+	void ss_internal(sf::Texture*);
 public:
 	HUD();
 	void setUp(sf::RenderWindow * window, sf::Sprite * collisable, int HowMany, sf::Sprite * players, int HowManyPlayers = 1);

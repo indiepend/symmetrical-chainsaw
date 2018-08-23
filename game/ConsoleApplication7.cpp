@@ -179,14 +179,15 @@ int main()
 			}
 			///////////////////////////////////////////////////////////////////////////////
 			window.clear(sf::Color(230, 230, 230));
-			map.drawSoftSprites();
-			map.drawHardSprites();
+			map.drawBackImgs();
+			map.drawCollisables();
 			map.drawText();
 			(*wrogowie).draw(&window);
 			playerAnim.drawAnimation(&window);
 			(*filtr).drawNoctovision(kamera.getPosition());
 			hud.draw();
 			wzrok.draw();
+			map.drawForwImgs();
 			game_menu.inGameDraw();
 			window.display();
 			if (zdarzenia.returnKey() == sf::Keyboard::Key::F12) {
@@ -219,11 +220,12 @@ int main()
 			sieci.refresh(bohater.GetAnimation(), (*playerAnim.getCurrentFrame()).getPosition());
 			///////////////////////////////////////////////////////////////////////////////
 			window.clear(sf::Color(230, 230, 230));
-			map.drawSoftSprites();
-			map.drawHardSprites();
+			map.drawBackImgs();
+			map.drawCollisables();
 			map.drawText();
 			(*wrogowie).draw(&window);
 			playerAnim.drawAnimation(&window);
+			map.drawForwImgs();
 			//(*filtr).drawNoctovision(kamera.getPosition());
 			hud.netDraw();
 			window.display();

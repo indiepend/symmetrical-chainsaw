@@ -1,7 +1,5 @@
 #include "loadmap.h"
 
-using namespace std;
-
 void loadmap::checker() {
 	for (int i = 1; i <= N_Lines; i++) {
 		if (A_Lines[i] == "TEXTURE") {
@@ -10,8 +8,11 @@ void loadmap::checker() {
 		else if (A_Lines[i] == "FONT") {
 			loadfont(&i);
 		}
-		else if (A_Lines[i] == "SPRITEM") {
-			loadspriteM(&i);
+		else if (A_Lines[i] == "BACKSPRITEM") {
+			loadBackSprite(&i);
+		}
+		else if (A_Lines[i] == "FORWSPRITEM") {
+			loadForwSprite(&i);
 		}
 		else if (A_Lines[i] == "SPRITET") {
 			loadspriteT(&i);
@@ -32,12 +33,12 @@ void loadmap::checker() {
 			setEnd(&i);
 		}
 		else {
-			cout << "wtf?" << endl;
+			std::cout << "ignored" << std::endl;
 		}
 	}
 }
 
-void loadmap::loadUp(string map, sf::RenderTarget * target){
+void loadmap::loadUp(std::string map, sf::RenderTarget * target){
 	drawTarget = target;
 	loader.loadUp(map);
 	reset();
@@ -46,26 +47,11 @@ void loadmap::loadUp(string map, sf::RenderTarget * target){
 	checker();
 	V_textures.shrink_to_fit();
 }
-void loadmap::drawText() {
-	for (int i = 0; i<N_texts; i++) {
-		drawTarget->draw(A_texts[i]);
-	}
-}
-void loadmap::drawSoftSprites() {
-	for (int i = 0; i < N_spritesM; i++) {
-		drawTarget->draw(V_Ssprites[i]);
-	}
-}
-void loadmap::drawHardSprites() {
-	for (int i = 0; i < N_spritesT; i++) {
-		drawTarget->draw(V_Hsprites[i]);
-	}
-}
 ///////////////////////////////////////////////////////////////////////////
 void loadmap::loadtexture(int * i) {
 	N_textures++;
 	V_textures.push_back(sf::Texture());
-	if (!V_textures[N_textures-1].loadFromFile(A_Lines[(*i) + 1]))
+	if (!V_textures[V_textures.size()-1].loadFromFile(A_Lines[(*i) + 1]))
 	{
 		 //error...
 	}
@@ -82,19 +68,26 @@ void loadmap::loadfont(int * i) {
 	(*i) += 1;
 }
 ///////////////////////////////////////////////////////////////////////////
-void loadmap::loadspriteM(int * i) {
+void loadmap::loadBackSprite(int * i) {
 	N_spritesM++;
-	V_Ssprites.push_back(sf::Sprite());
-	V_Ssprites[N_spritesM-1].setTexture(V_textures[atoi(A_Lines[(*i) + 1].c_str())]);
-	V_Ssprites[N_spritesM-1].setPosition(stof(A_Lines[(*i) + 2].c_str()), stof(A_Lines[(*i) + 3].c_str()));
+	V_BackImgs.push_back(sf::Sprite());
+	V_BackImgs[V_BackImgs.size() - 1].setTexture(V_textures[atoi(A_Lines[(*i) + 1].c_str())]);
+	V_BackImgs[V_BackImgs.size() - 1].setPosition(std::stof(A_Lines[(*i) + 2].c_str()), std::stof(A_Lines[(*i) + 3].c_str()));
+	(*i) += 3;
+}
+///////////////////////////////////////////////////////////////////////////
+void loadmap::loadForwSprite(int * i) {
+	N_spritesM++;
+	V_ForwImgs.push_back(sf::Sprite());
+	V_ForwImgs[V_ForwImgs.size() - 1].setTexture(V_textures[atoi(A_Lines[(*i) + 1].c_str())]);
+	V_ForwImgs[V_ForwImgs.size() - 1].setPosition(std::stof(A_Lines[(*i) + 2].c_str()), std::stof(A_Lines[(*i) + 3].c_str()));
 	(*i) += 3;
 }
 ///////////////////////////////////////////////////////////////////////////
 void loadmap::loadspriteT(int * i) {
-	N_spritesT++;
 	V_Hsprites.push_back(sf::Sprite());
-	V_Hsprites[N_spritesT-1].setTexture(V_textures[atoi(A_Lines[(*i) + 1].c_str())]);
-	V_Hsprites[N_spritesT-1].setPosition(stof(A_Lines[(*i) + 2].c_str()), stof(A_Lines[(*i) + 3].c_str()));
+	V_Hsprites[V_Hsprites.size() - 1].setTexture(V_textures[atoi(A_Lines[(*i) + 1].c_str())]);
+	V_Hsprites[V_Hsprites.size() - 1].setPosition(std::stof(A_Lines[(*i) + 2].c_str()), std::stof(A_Lines[(*i) + 3].c_str()));
 	(*i) += 3;
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -103,7 +96,7 @@ void loadmap::loadtext(int * i) {
 	A_texts = new sf::Text[N_texts];
 	A_texts[N_texts-1].setFont(A_font[(*i)+1]);
 	A_texts[N_texts-1].setString(A_Lines[(*i)+2]);
-	A_texts[N_texts-1].setPosition(stof(A_Lines[(*i)+3].c_str()), stof(A_Lines[(*i)+4].c_str()));
+	A_texts[N_texts-1].setPosition(std::stof(A_Lines[(*i)+3].c_str()), std::stof(A_Lines[(*i)+4].c_str()));
 	A_texts[N_texts-1].setCharacterSize(atoi(A_Lines[(*i)+5].c_str()));
 	A_texts[N_texts-1].setFillColor(sf::Color(atoi(A_Lines[(*i)+6].c_str()), atoi(A_Lines[(*i)+7].c_str()), atoi(A_Lines[(*i)+8].c_str())));
 	(*i) += 8;
@@ -112,7 +105,7 @@ void loadmap::loadtext(int * i) {
 void loadmap::setStart(int * i) {
 	N_starts++;
 	A_ProtCoord = new sf::Vector2f[N_starts];
-	A_ProtCoord[N_starts-1] = sf::Vector2f(stof(A_Lines[(*i)+1].c_str()), stof(A_Lines[(*i) + 2].c_str()));
+	A_ProtCoord[N_starts-1] = sf::Vector2f(std::stof(A_Lines[(*i)+1].c_str()), std::stof(A_Lines[(*i) + 2].c_str()));
 	(*i) += 2;
 }
 /////////////////////////////////////////////////////////////////////////
@@ -122,13 +115,12 @@ void loadmap::setStar(int * i) {
 }
 /////////////////////////////////////////////////////////////////////////
 void loadmap::setSpawn(int * i) {
-	N_spawns++;
 	V_EnemCoord.push_back(sf::Vector2f());
 	V_AnimSrc.push_back(std::string());
 	V_EnemType.push_back(std::string());
-	V_EnemCoord[N_spawns-1] = sf::Vector2f(stof(A_Lines[(*i) + 1].c_str()), stof(A_Lines[(*i) + 2].c_str()));
-	V_AnimSrc[N_spawns-1] = A_Lines[(*i) + 3];
-	V_EnemType[N_spawns-1] = A_Lines[(*i) + 4];
+	V_EnemCoord[V_EnemCoord.size() -1] = sf::Vector2f(std::stof(A_Lines[(*i) + 1].c_str()), std::stof(A_Lines[(*i) + 2].c_str()));
+	V_AnimSrc[V_AnimSrc.size() -1] = A_Lines[(*i) + 3];
+	V_EnemType[V_EnemType.size() -1] = A_Lines[(*i) + 4];
 	(*i) += 4;
 }
 /////////////////////////////////////////////////////////////////////////
@@ -138,15 +130,16 @@ void loadmap::setEnd(int * i) {
 }
 /////////////////////////////////////////////////////////////////////////
 int loadmap::EnemyNumber() {
-	return N_spawns;
+	std::cout << "n1" << " lol " << V_EnemCoord.size() << std::endl;
+	return V_EnemCoord.size();
 }
-string * loadmap::EnemyType() {
+std::string * loadmap::EnemyType() {
 	return V_EnemType.data();
 }
 sf::Vector2f * loadmap::EnemyCoords() {
 	return V_EnemCoord.data();
 }
-string * loadmap::eAnimSource() {
+std::string * loadmap::eAnimSource() {
 	return V_AnimSrc.data();
 }
 sf::Vector2f loadmap::PlayerCoords() {
@@ -160,22 +153,41 @@ sf::Sprite * loadmap::Collisionable() {
 	return V_Hsprites.data();
 }
 int loadmap::CollisionNum() {
-	return N_spritesT;
+	return V_Hsprites.size();
 }
+
+void loadmap::drawText() {
+	for (int i = 0; i<N_texts; i++) {
+		drawTarget->draw(A_texts[i]);
+	}
+}
+void loadmap::drawBackImgs() {
+	for (int i = 0; i < V_BackImgs.size(); i++) {
+		drawTarget->draw(V_BackImgs[i]);
+	}
+}
+void loadmap::drawForwImgs() {
+	for (int i = 0; i < V_ForwImgs.size(); i++) {
+		drawTarget->draw(V_ForwImgs[i]);
+	}
+}
+void loadmap::drawCollisables() {
+	for (int i = 0; i < V_Hsprites.size(); i++) {
+		drawTarget->draw(V_Hsprites[i]);
+	}
+}
+
 void loadmap::reset() {
 	V_textures.clear();
 	V_Hsprites.clear();
-	V_Ssprites.clear();
+	V_ForwImgs.clear();
+	V_BackImgs.clear();
 	V_EnemCoord.clear();
 	V_AnimSrc.clear();
 	V_EnemType.clear();
-	N_textures = 0;
 	N_Lines = 0;
 	N_texts = 0;
 	N_fonts = 0;//texts
-	N_textures = 0;
-	N_spritesM = 0;
-	N_spritesT = 0;//sprites
 	N_starts = 0;
 	N_stars = 0;
 	N_spawns = 0;
