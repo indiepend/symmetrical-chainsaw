@@ -1,11 +1,12 @@
 #include "Protagonist.h"
 
 void Protagonist::Check() {
+	sf::Listener::setPosition(ziomus->getPosition().x, ziomus->getPosition().y, 0);
+
 	if (sf::Keyboard::isKeyPressed(keys[4])) {
 		SetAnimation("Attack");
 		//to do
 	}
-
 
 	if (qw % 10 == 0) {
 	if (sf::Keyboard::isKeyPressed(keys[5])) {
@@ -120,6 +121,7 @@ void Protagonist::setUp(sf::Vector2f coords,sf::Sprite * Picture, sf::Sprite* Ma
 	ziomus = Picture;
 	(*ziomus).setPosition(coords);
 	keys = setts;
+	sf::Listener::setDirection(1.f, 0.f, 0.f);
 	Movin::restart();
 }
 

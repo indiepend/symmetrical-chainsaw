@@ -6,11 +6,13 @@ class SubAnimation
 	sf::IntRect * iRect = NULL;
 	sf::Texture texture;
 	sf::Clock zegar;
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
 
 	std::string ARG_name;
 	int ARG_framNum, w=0;
 	float ARG_length = 1;
-	bool isName=false;
+	bool isName=false,issound=false;
 public:
 	//////////////////////////////////////////////////
 	///\brief
@@ -52,19 +54,26 @@ public:
 
 	//////////////////////////////////////////////////
 	///\brief
+	///sets sound which will be played while
+	///animation playing
+	//////////////////////////////////////////////////
+	void setSound(std::string);
+
+	//////////////////////////////////////////////////
+	///\brief
 	///resets time which passed while it wasn't ready to updated repeatedly
 	//////////////////////////////////////////////////
 	void resetTimer();
 
 	//////////////////////////////////////////////////
 	///\brief
-	///returns number of frames
+	///\return number of frames
 	//////////////////////////////////////////////////
 	int getFrameNum();
 
 	//////////////////////////////////////////////////
 	///\brief
-	///returns name of animation
+	///\return name of animation
 	///or "none" if there isn't any
 	//////////////////////////////////////////////////
 	std::string getName();

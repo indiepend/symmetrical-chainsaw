@@ -232,7 +232,6 @@ int main()
 			}
 		}
 	}
-	hud.createlog();
 }
 
 //int main() {

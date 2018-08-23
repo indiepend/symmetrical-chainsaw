@@ -36,11 +36,29 @@ int SubAnimation::getFrameNum() {
 }
 
 void SubAnimation::setFrame(sf::Sprite * sprite) {
+	if (issound) {
+		if (sound.getStatus() != sf::Sound::Playing) {
+			sound.setBuffer(buffer);
+			sound.setMinDistance(5.f);
+			sound.setPosition(sprite->getPosition().x, sprite->getPosition().y,0);
+			sound.play();
+		}
+	}
 	(*sprite).setTextureRect(iRect[w%ARG_framNum +1]);
 	(*sprite).setTexture(texture);
 	if (zegar.getElapsedTime().asSeconds() > ARG_length / ARG_framNum) {
 		w++;
 		zegar.restart();
+	}
+}
+
+void SubAnimation::setSound(std::string filename)
+{
+	if (filename != "none") {
+		if (!buffer.loadFromFile(filename)) {
+
+		}
+		issound = true;
 	}
 }
 
