@@ -47,7 +47,9 @@ bool Events::getInput(std::string* input)
 
 sf::Keyboard::Key Events::returnKey() 
 {
-	return key;
+	sf::Keyboard::Key temp = key;
+	key = sf::Keyboard::Unknown;
+	return temp;
 }
 
 bool Events::isEscapePressed() 
