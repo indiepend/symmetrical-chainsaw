@@ -11,11 +11,13 @@ void Animation::loadAnimations(std::string filename) {
 		subanimation[i].setFrames(atoi(lines[leftby+2].c_str()));
 		subanimation[i].setTexture(lines[leftby+3]);
 		subanimation[i].setLength(std::stof(lines[leftby + 4].c_str()));
-		leftby += 4;
+		subanimation[i].setSound(lines[leftby + 5]);
+		leftby += 5;
 		for (int q = 1; q <= subanimation[i].getFrameNum(); q++) {		
 			subanimation[i].setRect(atoi(lines[leftby + 1].c_str()), atoi(lines[leftby + 2].c_str()), atoi(lines[leftby + 3].c_str()), atoi(lines[leftby + 4].c_str()), q);
 			leftby += 4;
 		}
+
 	}
 }
 
